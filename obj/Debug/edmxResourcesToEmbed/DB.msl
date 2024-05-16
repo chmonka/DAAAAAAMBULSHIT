@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище demTestModelContainer" CdmEntityContainer="demTestEntities1">
+    <EntitySetMapping Name="Employe">
+      <EntityTypeMapping TypeName="demTestModel.Employe">
+        <MappingFragment StoreEntitySet="Employe">
+          <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MidName" ColumnName="MidName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Request">
+      <EntityTypeMapping TypeName="demTestModel.Request">
+        <MappingFragment StoreEntitySet="Request">
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Equipment" ColumnName="Equipment" />
+          <ScalarProperty Name="TypeProblem" ColumnName="TypeProblem" />
+          <ScalarProperty Name="Problem" ColumnName="Problem" />
+          <ScalarProperty Name="StatusRequest" ColumnName="StatusRequest" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="ClientMidName" ColumnName="ClientMidName" />
+          <ScalarProperty Name="ClientLastName" ColumnName="ClientLastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="demTestModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="RequestEmploye" TypeName="demTestModel.RequestEmploye" StoreEntitySet="RequestEmploye">
+      <EndProperty Name="Employe">
+        <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+      </EndProperty>
+      <EndProperty Name="Request">
+        <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

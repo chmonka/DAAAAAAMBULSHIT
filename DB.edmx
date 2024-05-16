@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище demTestModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="EmployeID" />
+          </Key>
+          <Property Name="EmployeID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MidName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="RoleID" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Equipment" Type="nvarchar" MaxLength="50" />
+          <Property Name="TypeProblem" Type="nvarchar" MaxLength="50" />
+          <Property Name="Problem" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusRequest" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientMidName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestEmploye">
+          <Key>
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="EmployeID" />
+          </Key>
+          <Property Name="RequestID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="EmployeID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employe_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestEmploye_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="RequestEmploye" Type="Self.RequestEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="EmployeID" />
+            </Principal>
+            <Dependent Role="RequestEmploye">
+              <PropertyRef Name="EmployeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestEmploye_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="RequestEmploye" Type="Self.RequestEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="RequestEmploye">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище demTestModelContainer">
+          <EntitySet Name="Employe" EntityType="Self.Employe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestEmploye" EntityType="Self.RequestEmploye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employe_Role" Association="Self.FK_Employe_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employe" EntitySet="Employe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestEmploye_Employe" Association="Self.FK_RequestEmploye_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="RequestEmploye" EntitySet="RequestEmploye" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestEmploye_Request" Association="Self.FK_RequestEmploye_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="RequestEmploye" EntitySet="RequestEmploye" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="demTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="EmployeID" />
+          </Key>
+          <Property Name="EmployeID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MidName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleID" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Employe_Role" FromRole="Employe" ToRole="Role" />
+          <NavigationProperty Name="Request" Relationship="Self.RequestEmploye" FromRole="Employe" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Equipment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TypeProblem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Problem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StatusRequest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClientMidName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClientLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employe" Relationship="Self.RequestEmploye" FromRole="Request" ToRole="Employe" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employe" Relationship="Self.FK_Employe_Role" FromRole="Role" ToRole="Employe" />
+        </EntityType>
+        <Association Name="FK_Employe_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RequestEmploye">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="demTestEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employe" EntityType="Self.Employe" />
+          <EntitySet Name="Request" EntityType="Self.Request" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <AssociationSet Name="FK_Employe_Role" Association="Self.FK_Employe_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employe" EntitySet="Employe" />
+          </AssociationSet>
+          <AssociationSet Name="RequestEmploye" Association="Self.RequestEmploye">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище demTestModelContainer" CdmEntityContainer="demTestEntities1">
+          <EntitySetMapping Name="Employe">
+            <EntityTypeMapping TypeName="demTestModel.Employe">
+              <MappingFragment StoreEntitySet="Employe">
+                <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MidName" ColumnName="MidName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="demTestModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Equipment" ColumnName="Equipment" />
+                <ScalarProperty Name="TypeProblem" ColumnName="TypeProblem" />
+                <ScalarProperty Name="Problem" ColumnName="Problem" />
+                <ScalarProperty Name="StatusRequest" ColumnName="StatusRequest" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientMidName" ColumnName="ClientMidName" />
+                <ScalarProperty Name="ClientLastName" ColumnName="ClientLastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="demTestModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RequestEmploye" TypeName="demTestModel.RequestEmploye" StoreEntitySet="RequestEmploye">
+            <EndProperty Name="Employe">
+              <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+            </EndProperty>
+            <EndProperty Name="Request">
+              <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

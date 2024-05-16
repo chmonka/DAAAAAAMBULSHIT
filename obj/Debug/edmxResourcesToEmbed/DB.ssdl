@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище demTestModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Employe">
+    <Key>
+      <PropertyRef Name="EmployeID" />
+    </Key>
+    <Property Name="EmployeID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MidName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="8" Nullable="false" />
+    <Property Name="RoleID" Type="numeric" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Equipment" Type="nvarchar" MaxLength="50" />
+    <Property Name="TypeProblem" Type="nvarchar" MaxLength="50" />
+    <Property Name="Problem" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StatusRequest" Type="nvarchar" MaxLength="50" />
+    <Property Name="ClientName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientMidName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RequestEmploye">
+    <Key>
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="EmployeID" />
+    </Key>
+    <Property Name="RequestID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="EmployeID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Employe_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Employe">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestEmploye_Employe">
+    <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+    <End Role="RequestEmploye" Type="Self.RequestEmploye" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employe">
+        <PropertyRef Name="EmployeID" />
+      </Principal>
+      <Dependent Role="RequestEmploye">
+        <PropertyRef Name="EmployeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestEmploye_Request">
+    <End Role="Request" Type="Self.Request" Multiplicity="1" />
+    <End Role="RequestEmploye" Type="Self.RequestEmploye" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="RequestEmploye">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище demTestModelContainer">
+    <EntitySet Name="Employe" EntityType="Self.Employe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestEmploye" EntityType="Self.RequestEmploye" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employe_Role" Association="Self.FK_Employe_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Employe" EntitySet="Employe" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestEmploye_Employe" Association="Self.FK_RequestEmploye_Employe">
+      <End Role="Employe" EntitySet="Employe" />
+      <End Role="RequestEmploye" EntitySet="RequestEmploye" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestEmploye_Request" Association="Self.FK_RequestEmploye_Request">
+      <End Role="Request" EntitySet="Request" />
+      <End Role="RequestEmploye" EntitySet="RequestEmploye" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

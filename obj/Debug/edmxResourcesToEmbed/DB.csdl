@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Employe">
+    <Key>
+      <PropertyRef Name="EmployeID" />
+    </Key>
+    <Property Name="EmployeID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MidName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleID" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Employe_Role" FromRole="Employe" ToRole="Role" />
+    <NavigationProperty Name="Request" Relationship="Self.RequestEmploye" FromRole="Employe" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Equipment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TypeProblem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Problem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StatusRequest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClientMidName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClientLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Employe" Relationship="Self.RequestEmploye" FromRole="Request" ToRole="Employe" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Employe" Relationship="Self.FK_Employe_Role" FromRole="Role" ToRole="Employe" />
+  </EntityType>
+  <Association Name="FK_Employe_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Employe">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RequestEmploye">
+    <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="demTestEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Employe" EntityType="Self.Employe" />
+    <EntitySet Name="Request" EntityType="Self.Request" />
+    <EntitySet Name="Role" EntityType="Self.Role" />
+    <AssociationSet Name="FK_Employe_Role" Association="Self.FK_Employe_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Employe" EntitySet="Employe" />
+    </AssociationSet>
+    <AssociationSet Name="RequestEmploye" Association="Self.RequestEmploye">
+      <End Role="Employe" EntitySet="Employe" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
